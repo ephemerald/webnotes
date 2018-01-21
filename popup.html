@@ -4,13 +4,24 @@
   <title>My first API</title>
   <!-- <script src="clarifaiapi.js"></script> -->
   <!-- <script src="jquery.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
+	<p style="text-align: center;">NSFW Level</p>
 
-	<div class="slidecontainer">
-  		<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-	</div>
+	<script src="popup.js"></script>
 
-</div>
+
+	<!-- <input type="button" value="Refresh Page" onClick="window>location.reload()"> -->
+	<!-- <input type="button" value = "Refresh" onclick="history.go(0)" /> -->
+	<p> 0 = very safe | 100 = SEE EVERYTHING</p>
+   <div id="input">
+     <input type="text" id="inputNsfwValue"/>
+     <input type="button" value="Submit" id="submitButton"">
+   </div>
+
+<!-- 	<div class="slidecontainer">
+  		<input type="range" min="1" max="100" class="slider" id="myRange">
+	</div> -->
 </body>
 </html>

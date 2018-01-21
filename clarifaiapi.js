@@ -2,29 +2,41 @@ console.log('hello');
 
 var url = "https://api.clarifai.com/v2/models/e9576d86d2004ed1a38ba0cf39ecb4b1/outputs";
 
-function process(img) {
+function getNSFWNumber() {
+  chrome.storage.sync.get(['nsfwNumber'], function(items) {
+      var imgArray = document.getElementsByTagName('img');
+      console.log(imgArray);
+      for (var j = 0; j < imgArray.length; j++) {
+        process(imgArray[j], items.nsfwNumber);
+      }
+  });
+}
+
+function process(img,nsfwNumber) {
   console.log('processing', img.src);
+
   var data = {
     "inputs": [
-      {
-        "data": {
-          "image": {
-            "url": img.src
-          }
+    {
+      "data": {
+        "image": {
+          "url": img.src
         }
       }
+    }
     ]
   };
 
   data = JSON.stringify(data);
-
+  var nsfwPercent = nsfwNumber / 100;
+  console.log('nsfwpercent '+ nsfwPercent);
   $.ajax({
     type: "POST",
     url: url,
     dataType: "json",
     data: data,
     headers: {
-      "Authorization" :"Key c5252b97ae09413a81fdf8a541a96de9",
+      "Authorization" :"Key cb932ea3884847718878a5960bbdbc9e",
       "Content-Type" :"application/json"
     },
     success: function(response) {
@@ -34,7 +46,8 @@ function process(img) {
       } else if (response.outputs[0].data.concepts[0].name === "nsfw") {
         var nsfwVal = response.outputs[0].data.concepts[0].value;
       }
-      if (nsfwVal > 0.5) {
+      if (nsfwVal > nsfwPercent) {
+        console.log('nsfw value is over the number, ' + nsfwPercent);
         // console.log(imgArray);
         // images[i]= document.images[i].src;
         // Document object (web page)
@@ -63,12 +76,14 @@ function process(img) {
 }
 
 window.onload = function() {
-  var imgArray = document.getElementsByTagName('img');
+  /*var imgArray = document.getElementsByTagName('img');
   console.log(imgArray);
-
   for (var j = 0; j < imgArray.length; j++) {
-    process(imgArray[j]);
-  }
-
+    var nsfwNumber = getNSFWNumber();
+    console.log('we got nsfw nuber from its function: ' + nsfwNumber);
+    process(imgArray[j], nsfwNumber);
+  }*/
+  getNSFWNumber();
+  
   return;
 }
