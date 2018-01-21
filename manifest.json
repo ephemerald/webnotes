@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://*/*", "https://en.wikipedia.org/*"],
+      "matches": ["https://*/*", "http://*/*", "https://en.wikipedia.org/*", "<all_urls>"],
       "js": ["jquery.js", "clarifaiapi.js"],
       "run_at": "document_end"
     }
