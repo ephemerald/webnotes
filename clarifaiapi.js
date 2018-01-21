@@ -34,19 +34,29 @@ function process(img) {
       } else if (response.outputs[0].data.concepts[0].name === "nsfw") {
         var nsfwVal = response.outputs[0].data.concepts[0].value;
       }
-      if (sfwVal > 0.5) {
+      if (nsfwVal > 0.5) {
         // console.log(imgArray);
         // images[i]= document.images[i].src;
         // Document object (web page)
         //   .images =>
         // for each image in here, throwinto api call
-        var currentHeight = img.height + "px";
-        var currentWidth = img.width + "px";
+        var currentHeight = img.height + 'px';
+        var currentWidth = img.width + 'px';
         // console.log(currentHeight);
         // console.log(currentWidth);
         img.style.height = currentHeight;
         img.style.width = currentWidth;
-        img.src = "https://i.imgur.com/IEYInUL.jpg";
+        var ratioHeight = parseFloat(img.height);
+        var ratioWidth = parseFloat(img.width);
+        var ratio = (ratioHeight/ratioWidth);
+        console.log(ratio);
+        if (ratio < 0.75) {
+          img.src = "http://www.petguide.com/wp-content/uploads/2014/10/cutest-dog-breeds-main.jpg";
+        } else if (ratio > 1.25) {
+          img.src = "https://img.buzzfeed.com/buzzfeed-static/static/2015-12/3/15/enhanced/webdr07/enhanced-26461-1449174160-14.jpg?downsize=715:*&output-format=auto&output-quality=auto";
+        } else {
+          img.src = "https://i.imgur.com/IEYInUL.jpg";
+        }
       }
     }
   });
