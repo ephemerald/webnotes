@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+
+  "name": "Work Safe",
+  "description": "This extension changes NSFW pictures on the page to pictures of cute dogs.",
+  "version": "1.0",
+
+  "browser_action": {
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*", "https://en.wikipedia.org/*"],
+      "js": ["jquery.js", "clarifaiapi.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_security_policy": "script-src 'self' https://api.clarifai.com; object-src 'self'",
+  "background": {
+        "scripts": ["jquery.js"]
+    }
+}
